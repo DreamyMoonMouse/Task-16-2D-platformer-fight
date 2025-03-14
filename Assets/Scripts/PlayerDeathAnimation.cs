@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(PlayerAnimation))]
+[RequireComponent(typeof(Animations))]
 public class PlayerDeathAnimation : MonoBehaviour
 {
     [SerializeField] private float _fallSpeed = 2f;
@@ -10,13 +10,12 @@ public class PlayerDeathAnimation : MonoBehaviour
     
     private Vector3 _originalScale;
     private Coroutine _fallCoroutine;
-    private PlayerAnimation _playerAnimation;
-    private bool _isDead = false;
+    private Animations _animations;
 
     private void Awake()
     {
         _originalScale = transform.localScale;
-        _playerAnimation = GetComponent<PlayerAnimation>();
+        _animations = GetComponent<Animations>();
     }
 
     private void OnEnable()
@@ -26,6 +25,7 @@ public class PlayerDeathAnimation : MonoBehaviour
         if (playerDeath != null)
         {
             playerDeath.OnPlayerDied += HandlePlayerDied;
+            playerDeath.OnGameRestarted += HandleGameRestarted;
         }
     }
 
@@ -36,32 +36,30 @@ public class PlayerDeathAnimation : MonoBehaviour
         if (playerDeath != null)
         {
             playerDeath.OnPlayerDied -= HandlePlayerDied;
+            playerDeath.OnGameRestarted -= HandleGameRestarted;
         }
     }
     
     private void HandlePlayerDied()
     {
-        if (_isDead == false)
-        {
-            PlayDeathAnimation(true);
-            _isDead = true;
-        }
-        else
-        {
-            PlayDeathAnimation(false);
-            _isDead = false;
-        }
+        PlayDeathAnimation(true);
     }
+
+    private void HandleGameRestarted()
+    {
+        PlayDeathAnimation(false);
+    }
+    
     private void PlayDeathAnimation(bool isDead)
     {
         if (isDead)
         {
-            _playerAnimation.SetIsDead(true);
+            _animations.SetIsDead(true);
             _fallCoroutine = StartCoroutine(FallAnimation());
         }
         else
         {
-            _playerAnimation.SetIsDead(false);
+            _animations.SetIsDead(false);
             if (_fallCoroutine != null)
             {
                 StopCoroutine(_fallCoroutine);
@@ -84,6 +82,6 @@ public class PlayerDeathAnimation : MonoBehaviour
         }
         
         transform.localScale = _originalScale;
-        _playerAnimation.SetIsDead(false);
+        _animations.SetIsDead(false);
     }
 }

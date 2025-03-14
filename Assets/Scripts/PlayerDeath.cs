@@ -1,97 +1,80 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.Serialization;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Health), typeof(PlayerAnimation))]
-public class PlayerDeath : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D), typeof(Animations), typeof(Invulnerability))]
+public class PlayerDeath : Death
 {
     [SerializeField] private Canvas _restartCanvas;
     [SerializeField] private Transform _startPosition;
-    
-    private bool _isDead = false;
+    [SerializeField] private Animations _animations;
+
     private Rigidbody2D _rigidbody;
-    private Health _health;
-    private PlayerAnimation _playerAnimation;
+    //private Invulnerability _invulnerability;
     
     public event Action OnPlayerDied;
+    public event Action OnGameRestarted;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _restartCanvas.gameObject.SetActive(false);
         _rigidbody = GetComponent<Rigidbody2D>();
-        _health = GetComponent<Health>();
-        _playerAnimation = GetComponent<PlayerAnimation>();
+        //_invulnerability = GetComponent<Invulnerability>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent<Enemy>(out Enemy enemy))
-        {
-            _health.TakeDamage(enemy.Damage);
-            
-            if (_health.CurrentHealth > 0 && !_isDead)
-            {
-                _playerAnimation.SetIsHurt(true);
-            }
-            else if (_health.CurrentHealth <= 0 && !_isDead)
-            {
-                Die();
-            }
-        }
-    }
-
-    private void Die()
+    protected override void Die()
     {
         if (_isDead) return;
-        
+
         float delay = 1.5f;
         _isDead = true;
-        
+
         if (_rigidbody != null)
         {
             _rigidbody.simulated = false;
         }
-    
+
         OnPlayerDied?.Invoke();
-        StartCoroutine(ShowRestartButtonAfterDelay(delay)); 
+        StartCoroutine(ShowRestartButtonAfterDelay(delay));
     }
 
     private IEnumerator ShowRestartButtonAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        
+
         if (_restartCanvas != null)
         {
             _restartCanvas.gameObject.SetActive(true);
         }
     }
 
-    private void RestartGame()
+    public void RestartGame()
     {
         Time.timeScale = 1f;
         _isDead = false;
-        
+
         if (_restartCanvas != null)
         {
             _restartCanvas.gameObject.SetActive(false);
         }
-        
+
         Respawn();
-        
+
         if (_rigidbody != null)
         {
             _rigidbody.simulated = true;
         }
-        
+
         _health.Heal(_health.MaxHealth);
-        OnPlayerDied?.Invoke();
+        OnGameRestarted?.Invoke();
     }
-    
+
     private void Respawn()
     {
-        float size = 1f;
         transform.position = _startPosition.position;
-        transform.localScale = new Vector3(size, size, size);
+        transform.localScale = Vector3.one;
         _rigidbody.linearVelocity = Vector2.zero;
     }
 }

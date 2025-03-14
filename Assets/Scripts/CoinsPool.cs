@@ -28,13 +28,13 @@ public class CoinsPool : MonoBehaviour
         }
         
         _coinCollector.OnCoinCollected += HandleCoinCollected;
-        _playerDeath.OnPlayerDied += ResetAllCoins;
+        _playerDeath.OnGameRestarted += ResetAllCoins;
     }
     
     private void OnDestroy()
     {
         _coinCollector.OnCoinCollected -= HandleCoinCollected;
-        _playerDeath.OnPlayerDied -= ResetAllCoins;
+        _playerDeath.OnGameRestarted -= ResetAllCoins;
     }
 
     private void HandleCoinCollected(Coin collectedCoin)

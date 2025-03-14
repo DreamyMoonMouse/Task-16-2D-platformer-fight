@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator), typeof(BlinkAnimation))]
-public class PlayerAnimation : MonoBehaviour
+public class Animations : MonoBehaviour
 {
     private Animator _animator;
     private BlinkAnimation _blinkAnimation;
@@ -14,21 +14,22 @@ public class PlayerAnimation : MonoBehaviour
     
     public void SetIsMoving(bool isMoving)
     {
-        _animator.SetBool(PlayerAnimatorData.Params.IsMoving, isMoving);
+        _animator.SetBool(AnimatorData.Params.IsMoving, isMoving);
     }
 
     public void SetIsDead(bool isDead)
     {
-        _animator.SetBool(PlayerAnimatorData.Params.IsDead, isDead);
+        _animator.SetBool(AnimatorData.Params.IsDead, isDead);
     }
     
-    public void SetIsHurt(bool isHurt)
+    public void TriggerHurt()
     {
-        _animator.SetBool(PlayerAnimatorData.Params.IsHurt, isHurt);
-        
-        if (isHurt)
-        {
-            _blinkAnimation.Blink();
-        }
+        _animator.SetTrigger(AnimatorData.Params.IsHurt);
+        _blinkAnimation.Blink();
+    }
+    
+    public void SetIsAttacking(bool isAttacking)
+    {
+        _animator.SetBool(AnimatorData.Params.IsAttacking, isAttacking);
     }
 }

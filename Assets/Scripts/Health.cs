@@ -1,11 +1,11 @@
 using UnityEngine;
-using System;
 
 public class Health : MonoBehaviour
 {
     [SerializeField] private int _maxHealth = 2;
     
     private int _currentHealth;
+    private Animations _animations;
 
     public int CurrentHealth => _currentHealth;
     public int MaxHealth => _maxHealth;
@@ -13,6 +13,7 @@ public class Health : MonoBehaviour
     private void Awake()
     {
         _currentHealth = _maxHealth;
+        _animations = GetComponent<Animations>();
     }
 
     public void TakeDamage(int damage)
@@ -21,6 +22,7 @@ public class Health : MonoBehaviour
 
         _currentHealth -= damage;
         _currentHealth = Mathf.Max(_currentHealth, 0);
+        _animations.TriggerHurt();
     }
 
     public void Heal(int amount)

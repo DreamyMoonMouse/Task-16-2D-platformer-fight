@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(PlayerAnimation), typeof(InputReader))]
-[RequireComponent(typeof(GroundChecker))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Animations), typeof(InputReader))]
+[RequireComponent(typeof(GroundChecker), typeof(Knockback))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 5f;
@@ -10,16 +10,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private PlayerFlipAnimation _playerFlip;
     
-    private PlayerAnimation _playerAnimation;
+    private Animations _animations;
     private Rigidbody2D _rigidbody;
     private InputReader _inputReader;
+    private Knockback _knockback;
 
     private void Awake()
     {
-        _playerAnimation = GetComponent<PlayerAnimation>();
+        _animations = GetComponent<Animations>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _inputReader = GetComponent<InputReader>();
         _groundChecker = GetComponent<GroundChecker>();
+        _knockback = GetComponent<Knockback>();
     }
     
     private void Start()
@@ -34,9 +36,13 @@ public class PlayerMovement : MonoBehaviour
         while (isRunning)
         {
             float movementInput = _inputReader.HorizontalInput;
-            MovePlayer(movementInput);
-            _playerAnimation.SetIsMoving(Mathf.Abs(movementInput) > 0.01f);
-            _playerFlip.HandleFlip(movementInput);
+            
+            if (_knockback.IsKnockback == false)
+            {
+                MovePlayer(movementInput);
+                _animations.SetIsMoving(Mathf.Abs(movementInput) > 0.01f);
+                _playerFlip.HandleFlip(movementInput);
+            }
             
             if (_inputReader.IsJumpButtonPressed && _groundChecker.IsGrounded())
             {
@@ -49,7 +55,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer(float movementInput)
     {
-        _rigidbody.linearVelocity = new Vector2(movementInput * _moveSpeed, _rigidbody.linearVelocity.y);
+        if (_knockback.IsKnockback == false)
+        {
+            _rigidbody.linearVelocity = new Vector2(movementInput * _moveSpeed, _rigidbody.linearVelocity.y);
+        }
     }
 
     private void Jump()
