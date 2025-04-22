@@ -3,9 +3,9 @@ using System.Collections;
 
 public class PlayerFlipAnimation : MonoBehaviour
 {
-    [SerializeField] private Transform _spriteTransform;
     [SerializeField] private float _turnDuration = 0.5f;
 
+    private Transform _spriteTransform;
     private bool _facingRight = true;
     private Coroutine _currentTurnCoroutine;
 

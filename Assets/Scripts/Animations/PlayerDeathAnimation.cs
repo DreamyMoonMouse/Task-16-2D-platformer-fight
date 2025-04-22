@@ -25,7 +25,6 @@ public class PlayerDeathAnimation : MonoBehaviour
         if (playerDeath != null)
         {
             playerDeath.OnPlayerDied += HandlePlayerDied;
-            playerDeath.OnGameRestarted += HandleGameRestarted;
         }
     }
 
@@ -36,18 +35,12 @@ public class PlayerDeathAnimation : MonoBehaviour
         if (playerDeath != null)
         {
             playerDeath.OnPlayerDied -= HandlePlayerDied;
-            playerDeath.OnGameRestarted -= HandleGameRestarted;
         }
     }
     
     private void HandlePlayerDied()
     {
         PlayDeathAnimation(true);
-    }
-
-    private void HandleGameRestarted()
-    {
-        PlayDeathAnimation(false);
     }
     
     private void PlayDeathAnimation(bool isDead)
@@ -60,6 +53,7 @@ public class PlayerDeathAnimation : MonoBehaviour
         else
         {
             _animations.SetIsDead(false);
+            
             if (_fallCoroutine != null)
             {
                 StopCoroutine(_fallCoroutine);

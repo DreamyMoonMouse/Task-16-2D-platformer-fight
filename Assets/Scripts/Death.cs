@@ -1,11 +1,10 @@
 using UnityEngine;
-using System;
 
+[RequireComponent(typeof(Health))]
 public abstract class Death : MonoBehaviour
 {
     [SerializeField] protected Health _health;
-
-    public event Action OnDied;
+    
     protected bool _isDead = false;
 
     protected virtual void Awake()
@@ -15,7 +14,7 @@ public abstract class Death : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (_health.CurrentHealth <= 0 && !_isDead)
+        if (_health.CurrentHealth <= 0 && _isDead == false)
         {
             Die();
         }
@@ -24,7 +23,6 @@ public abstract class Death : MonoBehaviour
     protected virtual void Die()
     {
         _isDead = true;
-        OnDied?.Invoke();
         gameObject.SetActive(false);
     }
 }

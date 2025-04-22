@@ -8,7 +8,6 @@ public class BlinkAnimation : MonoBehaviour
     
     private SpriteRenderer _spriteRenderer;
     private Coroutine _blinkCoroutine;
-    public float GetBlinkDuration() => _blinkDuration;
 
     private void Awake()
     {

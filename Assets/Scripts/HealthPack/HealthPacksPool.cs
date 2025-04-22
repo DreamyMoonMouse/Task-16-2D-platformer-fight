@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class HealthPacksPool : MonoBehaviour
 {
-    [SerializeField] private PlayerDeath _playerDeath;
     [SerializeField] private HealthPackCollector _healthPackCollector;
     [SerializeField] private Health _playerHealth;
 
@@ -14,6 +13,7 @@ public class HealthPacksPool : MonoBehaviour
         foreach (Transform child in transform)
         {
             var healthPack = child.GetComponent<HealthPack>();
+            
             if (healthPack != null)
             {
                 _healthPacks.Add(healthPack);
@@ -21,25 +21,15 @@ public class HealthPacksPool : MonoBehaviour
         }
 
         _healthPackCollector.OnHealthPackCollected += HandleHealthPackCollected;
-        _playerDeath.OnGameRestarted += ResetAllHealthPacks;
     }
 
     private void OnDestroy()
     {
         _healthPackCollector.OnHealthPackCollected -= HandleHealthPackCollected;
-        _playerDeath.OnGameRestarted -= ResetAllHealthPacks;
     }
 
     private void HandleHealthPackCollected(HealthPack collectedHealthPack)
     {
         _playerHealth.Heal(_playerHealth.MaxHealth);
-    }
-
-    private void ResetAllHealthPacks()
-    {
-        foreach (var healthPack in _healthPacks)
-        {
-            healthPack.ResetHealthPack();
-        }
     }
 }

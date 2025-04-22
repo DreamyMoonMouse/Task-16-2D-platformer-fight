@@ -67,6 +67,7 @@ MonoBehaviour:
   _patrolPoints: []
   _moveSpeed: 3
   _sightRange: 5
+  _stopDistance: 1.5
 --- !u!50 &6541551879758025918
 Rigidbody2D:
   serializedVersion: 5

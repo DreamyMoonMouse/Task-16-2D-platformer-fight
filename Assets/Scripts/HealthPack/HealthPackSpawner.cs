@@ -13,6 +13,7 @@ public class HealthPackSpawner : MonoBehaviour
         for (int i = 0; i < _numberOfPacks; i++)
         {
             Vector2 spawnPosition = GetRandomGroundPosition();
+            
             if (spawnPosition != Vector2.zero)
             {
                 Instantiate(_healthPackPrefab, spawnPosition, Quaternion.identity, _healthPacksParent);
@@ -23,10 +24,10 @@ public class HealthPackSpawner : MonoBehaviour
     private Vector2 GetRandomGroundPosition()
     {
         Collider2D[] groundColliders = Physics2D.OverlapCircleAll(Vector2.zero, 1000f, _groundLayer);
+        
         if (groundColliders.Length == 0) return Vector2.zero;
         
         Collider2D randomPlatform = groundColliders[Random.Range(0, groundColliders.Length)];
-        
         Bounds bounds = randomPlatform.bounds;
         float randomX = Random.Range(bounds.min.x, bounds.max.x);
         float spawnY = bounds.max.y + _spawnHeightOffset;

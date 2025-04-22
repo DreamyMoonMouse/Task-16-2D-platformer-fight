@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animations))]
 public class Health : MonoBehaviour
 {
     [SerializeField] private int _maxHealth = 2;
@@ -18,7 +19,7 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (damage < 0) return;
+        if (_currentHealth <= 0 || damage < 0) return;
 
         _currentHealth -= damage;
         _currentHealth = Mathf.Max(_currentHealth, 0);

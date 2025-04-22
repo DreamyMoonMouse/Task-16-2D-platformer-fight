@@ -4,7 +4,6 @@ using System;
 
 public class CoinsPool : MonoBehaviour
 {
-    [SerializeField] private PlayerDeath _playerDeath;
     [SerializeField] private CoinCollector _coinCollector;
     
     private int _collectedCoins = 0;
@@ -28,13 +27,11 @@ public class CoinsPool : MonoBehaviour
         }
         
         _coinCollector.OnCoinCollected += HandleCoinCollected;
-        _playerDeath.OnGameRestarted += ResetAllCoins;
     }
     
     private void OnDestroy()
     {
         _coinCollector.OnCoinCollected -= HandleCoinCollected;
-        _playerDeath.OnGameRestarted -= ResetAllCoins;
     }
 
     private void HandleCoinCollected(Coin collectedCoin)
@@ -46,16 +43,5 @@ public class CoinsPool : MonoBehaviour
         {
             OnAllCoinsCollected?.Invoke();
         }
-    }
-
-    private void ResetAllCoins()
-    {
-        foreach (var coin in _coins)
-        {
-            coin.ResetCoin();
-        }
-        
-        _collectedCoins = 0;
-        OnScoreUpdated?.Invoke();
     }
 }

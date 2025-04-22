@@ -5,21 +5,24 @@ public class GameUI : MonoBehaviour
 {
     [SerializeField] private CoinsPool _coinsPool;
     [SerializeField] private Canvas _winCanvas;
-    [SerializeField] private Canvas _loseCanvas;
+    [SerializeField] private Canvas _gameOverCanvas;
     [SerializeField] private Text _scoreText;
+    [SerializeField] private PlayerDeath _playerDeath;
 
     private void Awake()
     {
         _winCanvas.gameObject.SetActive(false);
-        _loseCanvas.gameObject.SetActive(false);
+        _gameOverCanvas.gameObject.SetActive(false);
         _coinsPool.OnAllCoinsCollected += ShowWinMessage;
         _coinsPool.OnScoreUpdated += UpdateScore;
+        _playerDeath.OnPlayerDied += ShowGameOver;
     }
     
     private void OnDestroy()
     {
         _coinsPool.OnAllCoinsCollected -= ShowWinMessage;
         _coinsPool.OnScoreUpdated -= UpdateScore; 
+        _playerDeath.OnPlayerDied -= ShowGameOver;
     }
 
     private void ShowWinMessage()
@@ -28,10 +31,9 @@ public class GameUI : MonoBehaviour
         Time.timeScale = 0f;
     }
     
-    private void ShowLoseMessage()
+    private void ShowGameOver()
     {
-        _loseCanvas.gameObject.SetActive(true);
-        Time.timeScale = 0f; 
+        _gameOverCanvas.gameObject.SetActive(true);
     }
     
     private void UpdateScore()

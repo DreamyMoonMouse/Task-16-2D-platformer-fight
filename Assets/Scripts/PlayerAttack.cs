@@ -5,19 +5,11 @@ public class PlayerAttack : Attack
 {
     private InputReader _inputReader;
     private Animations _animations;
-    private PlayerDeath _playerDeath;
 
     private void Awake()
     {
         _inputReader = GetComponent<InputReader>();
         _animations = GetComponent<Animations>();
-        _playerDeath = GetComponent<PlayerDeath>();
-        //_playerDeath.OnPlayerDied += ResetAttack;
-    }
-
-    private void OnDestroy()
-    {
-        //_playerDeath.OnPlayerDied -= ResetAttack;
     }
 
     private void Update()
@@ -26,6 +18,11 @@ public class PlayerAttack : Attack
         {
             Attack();
         }
+    }
+    
+    protected override bool CanAttack(Collider2D collider)
+    {
+        return collider.TryGetComponent<Enemy>(out _);
     }
 
     private void Attack()
@@ -38,16 +35,5 @@ public class PlayerAttack : Attack
     private void StopAttack()
     {
         _animations.SetIsAttacking(false);
-    }
-
-    private void ResetAttack()
-    {
-        CancelInvoke(nameof(StopAttack));
-        _animations.SetIsAttacking(false);
-    }
-
-    protected override bool CanAttack(Collider2D collider)
-    {
-        return collider.TryGetComponent<Enemy>(out _);
     }
 }
