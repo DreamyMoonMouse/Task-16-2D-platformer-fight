@@ -1463,7 +1463,7 @@ MonoBehaviour:
   _mixer: {fileID: 24100000, guid: cab499db20e414349986ed2a97c4b873, type: 2}
   _soundsToggle: {fileID: 486900760}
   _masterSlider: {fileID: 1310593634}
-  _musicSlider: {fileID: 1310593634}
+  _musicSlider: {fileID: 1662649415}
   _buttonsSlider: {fileID: 1258192403}
 --- !u!1 &762478830
 GameObject:
