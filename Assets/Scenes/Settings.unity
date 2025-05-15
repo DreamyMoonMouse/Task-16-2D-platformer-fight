@@ -830,19 +830,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 376036385}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 376036387}
-        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
-        m_MethodName: OnStartButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &376036385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -894,7 +882,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonSound: {fileID: 8300000, guid: 55d387c78682c104382a49f5f87be67f, type: 3}
-  _audioSource: {fileID: 1444648944}
+  _button: {fileID: 376036384}
+  _mixerGroup: {fileID: -7498141031722167129, guid: cab499db20e414349986ed2a97c4b873, type: 2}
 --- !u!1 &432779139
 GameObject:
   m_ObjectHideFlags: 0
@@ -1178,6 +1167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 486900759}
   - component: {fileID: 486900760}
+  - component: {fileID: 486900761}
   m_Layer: 5
   m_Name: Toggle
   m_TagString: Untagged
@@ -1253,7 +1243,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 576391753}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SoundSettings, Assembly-CSharp
         m_MethodName: ToggleSounds
         m_Mode: 0
@@ -1266,6 +1256,20 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 1
+--- !u!114 &486900761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486900758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd7632b50309e54a9bc60773687050d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _toggle: {fileID: 486900760}
+  _masterSlider: {fileID: 1310593635}
 --- !u!1 &493391212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,55 +1420,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549683174}
   m_CullTransparentMesh: 1
---- !u!1 &576391751
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 576391752}
-  - component: {fileID: 576391753}
-  m_Layer: 0
-  m_Name: 'AudioSettings '
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &576391752
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 576391751}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -42.31189, y: 22.825989, z: 2.9856782}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 979552715}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &576391753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 576391751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bd995715c83f244190540cd6572374d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mixer: {fileID: 24100000, guid: cab499db20e414349986ed2a97c4b873, type: 2}
-  _soundsToggle: {fileID: 486900760}
-  _masterSlider: {fileID: 1310593634}
-  _musicSlider: {fileID: 1662649415}
-  _buttonsSlider: {fileID: 1258192403}
 --- !u!1 &762478830
 GameObject:
   m_ObjectHideFlags: 0
@@ -2050,7 +2005,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 576391752}
   - {fileID: 265296360}
   - {fileID: 1444648945}
   - {fileID: 53370034}
@@ -2572,6 +2526,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1258192402}
   - component: {fileID: 1258192403}
+  - component: {fileID: 1258192404}
   m_Layer: 5
   m_Name: Button Volume
   m_TagString: Untagged
@@ -2652,19 +2607,21 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 576391753}
-        m_TargetAssemblyTypeName: SoundSettings, Assembly-CSharp
-        m_MethodName: ChangeButtonsVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &1258192404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258192401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b607e036c2c0ee4a8fe73e33b82b3b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mixerGroup: {fileID: -7498141031722167129, guid: cab499db20e414349986ed2a97c4b873, type: 2}
+  _slider: {fileID: 1258192403}
 --- !u!1 &1310593632
 GameObject:
   m_ObjectHideFlags: 0
@@ -2675,6 +2632,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1310593633}
   - component: {fileID: 1310593634}
+  - component: {fileID: 1310593635}
   m_Layer: 5
   m_Name: Master Volume
   m_TagString: Untagged
@@ -2755,19 +2713,21 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 576391753}
-        m_TargetAssemblyTypeName: SoundSettings, Assembly-CSharp
-        m_MethodName: ChangeMasterVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &1310593635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310593632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b607e036c2c0ee4a8fe73e33b82b3b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mixerGroup: {fileID: 24300002, guid: cab499db20e414349986ed2a97c4b873, type: 2}
+  _slider: {fileID: 1310593634}
 --- !u!1 &1444648943
 GameObject:
   m_ObjectHideFlags: 0
@@ -3079,6 +3039,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1662649414}
   - component: {fileID: 1662649415}
+  - component: {fileID: 1662649416}
   m_Layer: 5
   m_Name: Music Volume
   m_TagString: Untagged
@@ -3159,19 +3120,21 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 576391753}
-        m_TargetAssemblyTypeName: SoundSettings, Assembly-CSharp
-        m_MethodName: ChangeMusicVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &1662649416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662649413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b607e036c2c0ee4a8fe73e33b82b3b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mixerGroup: {fileID: -8599199701697534789, guid: cab499db20e414349986ed2a97c4b873, type: 2}
+  _slider: {fileID: 1662649415}
 --- !u!1 &1664649167
 GameObject:
   m_ObjectHideFlags: 0
@@ -3255,19 +3218,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1664649170}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1664649172}
-        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
-        m_MethodName: OnStartButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1664649170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3319,7 +3270,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonSound: {fileID: 8300000, guid: 803197d29138c5249b493b22aea1d42e, type: 3}
-  _audioSource: {fileID: 1444648944}
+  _button: {fileID: 1664649169}
+  _mixerGroup: {fileID: -7498141031722167129, guid: cab499db20e414349986ed2a97c4b873, type: 2}
 --- !u!1 &1855674864
 GameObject:
   m_ObjectHideFlags: 0
@@ -3553,19 +3505,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1975205271}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1975205273}
-        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
-        m_MethodName: OnStartButtonClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1975205271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3617,7 +3557,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonSound: {fileID: 8300000, guid: 5bc43dc740c4e334b812ec7efe88ea5d, type: 3}
-  _audioSource: {fileID: 1444648944}
+  _button: {fileID: 1975205270}
+  _mixerGroup: {fileID: -7498141031722167129, guid: cab499db20e414349986ed2a97c4b873, type: 2}
 --- !u!1 &2063505034
 GameObject:
   m_ObjectHideFlags: 0

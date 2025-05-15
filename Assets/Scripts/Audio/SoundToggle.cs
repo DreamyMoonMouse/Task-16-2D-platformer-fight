@@ -5,64 +5,43 @@ public class SoundToggle : MonoBehaviour
 {
     [SerializeField] private Toggle _toggle;
     [SerializeField] private VolumeSlider _masterSlider;
-
-    private const string SoundsEnabledKey = "SoundsEnabled";
     
-    private float _minVolumeDb = -80f;
-    private float _minSliderValue = 0f;
+    private string _soundsEnabledKey = "SoundsEnabled";
+    private int _enabledValue = 1;
+    
+    private void OnEnable()  => _toggle.onValueChanged.AddListener(OnToggleChanged);
+    
+    private void OnDisable() => _toggle.onValueChanged.RemoveListener(OnToggleChanged);
 
     private void Start()
     {
-        bool soundsEnabled = PlayerPrefs.GetInt(SoundsEnabledKey, 1) == 1;
-        _toggle.isOn = soundsEnabled;
-        
-        if (soundsEnabled)
-        {
-            RestoreVolume();
-        }
-        else
-        {
-            Mute();
-        }
-
-        _toggle.onValueChanged.AddListener(ToggleSounds);
+        bool enabled = PlayerPrefs.GetInt(_soundsEnabledKey, _enabledValue) == _enabledValue;
+        _toggle.SetIsOnWithoutNotify(enabled);
+        _masterSlider.SetInteractable(enabled);
+        ApplyState(enabled);
     }
-
-    public void OnMasterSliderChanged(float value)
+    
+    private void OnToggleChanged(bool enabled)
     {
-        bool isUnmuted = value > _minSliderValue;
-        
-        if (_toggle.isOn != isUnmuted)
-        {
-            _toggle.isOn = isUnmuted;
-            ToggleSounds(isUnmuted);
-        }
+        PlayerPrefs.SetInt(_soundsEnabledKey, enabled ? _enabledValue : 0);
+        PlayerPrefs.Save();
+        ApplyState(enabled);
     }
 
-    private void ToggleSounds(bool enabled)
+    private void ApplyState(bool enabled)
     {
         if (enabled)
         {
-            RestoreVolume();
+            float saved = PlayerPrefs.GetFloat(_masterSlider.VolumePrefKey, _masterSlider.DefaultValue);
+            _masterSlider.UpdateSlider(saved);
+            _masterSlider.ApplyVolume(saved);
+            _masterSlider.SetInteractable(true);
         }
         else
         {
-            Mute();
+            _masterSlider.UpdateSlider(_masterSlider.MinValue);
+            _masterSlider.ApplyVolume(_masterSlider.MinValue);
+            _masterSlider.SetInteractable(false);
         }
-
-        PlayerPrefs.SetInt(SoundsEnabledKey, enabled ? 1 : 0);
-    }
-
-    private void Mute()
-    {
-        _masterSlider.UpdateSlider(_minSliderValue);
-        _masterSlider.SetVolume( _minVolumeDb);
-    }
-
-    private void RestoreVolume()
-    {
-        float master = PlayerPrefs.GetFloat("Master", 1f);
-        _masterSlider.UpdateSlider(master);
-        _masterSlider.SetVolume(master);
     }
 }
