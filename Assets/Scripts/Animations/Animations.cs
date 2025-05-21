@@ -16,12 +16,12 @@ public class Animations : MonoBehaviour
     
     private void OnEnable()
     {
-        _health.OnDamaged += HandleHurt;
+        _health.Damaged += HandleHurt;
     }
 
     private void OnDisable()
     {
-        _health.OnDamaged -= HandleHurt;
+        _health.Damaged -= HandleHurt;
     }
     
     public void SetIsMoving(bool isMoving)
