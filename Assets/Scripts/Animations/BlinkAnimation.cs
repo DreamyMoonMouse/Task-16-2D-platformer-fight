@@ -16,6 +16,8 @@ public class BlinkAnimation : MonoBehaviour
 
     public void Blink()
     {
+        if (_spriteRenderer == null) return;
+        
         if (_blinkCoroutine != null)
         {
             StopCoroutine(_blinkCoroutine);

@@ -1,20 +1,21 @@
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(Animations))]
 public class Health : MonoBehaviour
 {
-    [SerializeField] private int _maxHealth = 2;
+    [SerializeField] private int _maxHealth = 100;
     
     private int _currentHealth;
-    private Animations _animations;
 
     public int CurrentHealth => _currentHealth;
     public int MaxHealth => _maxHealth;
+    
+    public event Action<int> OnDamaged;
 
     private void Awake()
     {
         _currentHealth = _maxHealth;
-        _animations = GetComponent<Animations>();
     }
 
     public void TakeDamage(int damage)
@@ -23,7 +24,7 @@ public class Health : MonoBehaviour
 
         _currentHealth -= damage;
         _currentHealth = Mathf.Max(_currentHealth, 0);
-        _animations.TriggerHurt();
+        OnDamaged?.Invoke(_currentHealth);
     }
 
     public void Heal(int amount)
