@@ -1,29 +1,14 @@
 using UnityEngine;
 using TMPro;
 
-public class TextHealthDisplay : MonoBehaviour
+public class TextHealthDisplay : HealthDisplayBase
 {
-    [SerializeField] private TextMeshProUGUI _text;
-    [SerializeField] private Health _health;
+    [SerializeField] private TextMeshProUGUI _label;
 
-    private void OnEnable()
+    protected override void UpdateDisplay(float normalizedValue)
     {
-        _health.Damaged += UpdateText;
-    }
-
-    private void OnDisable()
-    {
-        _health.Damaged -= UpdateText;
-    }
-
-    private void Start()
-    {
-        UpdateText(_health.CurrentValue);
-    }
-
-    private void UpdateText(int current)
-    {
-        _text.text = $"{current}/{_health.MaxValue}";
+        int current = Mathf.RoundToInt(normalizedValue * _health.MaxValue);
+        _label.text = $"{current}/{_health.MaxValue}";
     }
 }
 

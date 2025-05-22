@@ -7,7 +7,7 @@ public class Health : MonoBehaviour
     
     private int _currentValue;
     
-    public event Action<int> Damaged;
+    public event Action<int> ValueChanged;
 
     public int CurrentValue => _currentValue;
     public int MaxValue => _maxValue;
@@ -17,23 +17,23 @@ public class Health : MonoBehaviour
         _currentValue = _maxValue;
     }
 
-    public void TakeDamage(int amount)
+    public void ApplyDamage(int amount)
     {
         if (_currentValue <= 0 || amount < 0) 
             return;
 
         _currentValue -= amount;
         _currentValue = Mathf.Max(_currentValue, 0);
-        Damaged?.Invoke(_currentValue);
+        ValueChanged?.Invoke(_currentValue);
     }
 
-    public void Heal(int amount)
+    public void ApplyHeal(int amount)
     {
         if (amount < 0) 
             return;
 
         _currentValue += amount;
         _currentValue = Mathf.Min(_currentValue, _maxValue);
-        Damaged?.Invoke(_currentValue);
+        ValueChanged?.Invoke(_currentValue);
     }
 }

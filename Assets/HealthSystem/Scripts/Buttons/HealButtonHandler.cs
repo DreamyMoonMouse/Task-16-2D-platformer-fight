@@ -1,27 +1,11 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
-public class HealButtonHandler : MonoBehaviour
+public class HealButtonHandler : HealthButtonBase
 {
-    [SerializeField] private Health _health;
-    [SerializeField] private int _healAmount = 10;
-
-    private Button _button;
-
-    private void Awake()
+    [SerializeField] private int _heal = 10;
+    
+    protected override void HandleAction()
     {
-        _button = GetComponent<Button>();
-        _button.onClick.AddListener(ApplyHeal);
-    }
-
-    private void OnDestroy()
-    {
-        _button.onClick.RemoveListener(ApplyHeal);
-    }
-
-    private void ApplyHeal()
-    {
-        _health.Heal(_healAmount);
+        _health.ApplyHeal(_heal);
     }
 }

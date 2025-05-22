@@ -41,7 +41,7 @@ public abstract class Attack : MonoBehaviour
     {
         if (collider.TryGetComponent<Health>(out Health health))
         {
-            health.TakeDamage(_damage);
+            health.ApplyDamage(_damage);
             return true;
         }
         

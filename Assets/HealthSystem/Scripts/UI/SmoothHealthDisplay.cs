@@ -2,44 +2,37 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class SmoothHealthDisplay : MonoBehaviour
+public class SmoothHealthDisplay : HealthDisplayBase
 {
     [SerializeField] private Slider _slider;
-    [SerializeField] private float _smoothSpeed = 50f;
-    [SerializeField] private Health _health;
+    [SerializeField] private float _duration = 0.3f;
 
-    private Coroutine _coroutine;
+    private Coroutine _routine;
+    private float _startValue;
+    private float _targetValue;
 
-    private void Start()
+    protected override void UpdateDisplay(float normalizedValue)
     {
-        _slider.maxValue = _health.MaxValue;
-        _slider.value = _health.CurrentValue;
+        if (_routine != null)
+            StopCoroutine(_routine);
+
+        _startValue = _slider.value;
+        _targetValue = normalizedValue;
+        _routine = StartCoroutine(AnimateRoutine());
     }
 
-    private void OnEnable()
+    private IEnumerator AnimateRoutine()
     {
-        _health.Damaged += AnimateSlider;
-    }
-
-    private void OnDisable()
-    {
-        _health.Damaged -= AnimateSlider;
-    }
-
-    private void AnimateSlider(int value)
-    {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
-
-        _coroutine = StartCoroutine(AnimateRoutine(value));
-    }
-
-    private IEnumerator AnimateRoutine(int target)
-    {
-        while (Mathf.Approximately(_slider.value, target) == false)
+        float elapsed = 0f;
+        
+        while (elapsed < _duration)
         {
-            _slider.value = Mathf.MoveTowards(_slider.value, target, _smoothSpeed * Time.deltaTime);
+            float t = elapsed / _duration;
+            _slider.value = Mathf.Lerp(_startValue, _targetValue, t);
+            elapsed += Time.deltaTime;
             yield return null;
         }
+        
+        _slider.value = _targetValue;
     }
 }

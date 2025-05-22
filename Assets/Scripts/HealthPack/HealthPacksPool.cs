@@ -30,6 +30,6 @@ public class HealthPacksPool : MonoBehaviour
 
     private void HandleHealthPackCollected(HealthPack collectedHealthPack)
     {
-        _playerHealth.Heal(_playerHealth.MaxValue);
+        _playerHealth.ApplyHeal(_playerHealth.MaxValue);
     }
 }
