@@ -8,6 +8,7 @@ public class Health : MonoBehaviour
     private int _currentValue;
     
     public event Action<int> ValueChanged;
+    public event Action<int> Damaged;
 
     public int CurrentValue => _currentValue;
     public int MaxValue => _maxValue;
@@ -24,6 +25,7 @@ public class Health : MonoBehaviour
 
         _currentValue -= amount;
         _currentValue = Mathf.Max(_currentValue, 0);
+        Damaged?.Invoke(_currentValue);
         ValueChanged?.Invoke(_currentValue);
     }
 

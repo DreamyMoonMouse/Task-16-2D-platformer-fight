@@ -1,11 +1,9 @@
 using UnityEngine;
 using System;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Animations))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerDeath : Death
 {
-    [SerializeField] private Animations _animations;
-
     private Rigidbody2D _rigidbody;
     
     public event Action OnPlayerDied;

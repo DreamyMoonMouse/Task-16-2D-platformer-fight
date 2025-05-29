@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Knockback))]
-public class EnemyPatrol : MonoBehaviour
+public class MobPatrol : MonoBehaviour
 {
     [SerializeField] private Transform[] _patrolPoints;
     [SerializeField] private float _moveSpeed = 3f;

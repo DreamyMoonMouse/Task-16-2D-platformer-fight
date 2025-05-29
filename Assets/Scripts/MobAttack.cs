@@ -1,16 +1,8 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Enemy))]
-public class EnemyAttack : Attack
+[RequireComponent(typeof(Mob))]
+public class MobAttack : Attack
 {
-    private Enemy _enemy;
-
-    private void Awake()
-    {
-        _enemy = GetComponent<Enemy>();
-        _damage = _enemy.Damage; 
-    }
-
     private void Update()
     {
         PerformAttack();

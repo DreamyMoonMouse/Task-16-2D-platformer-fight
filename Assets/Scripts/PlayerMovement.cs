@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Animations), typeof(InputReader))]
+[RequireComponent(typeof(Rigidbody2D), typeof(InputReader))]
 [RequireComponent(typeof(GroundChecker), typeof(Knockback))]
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,19 +9,24 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _jumpForce = 10f;
     [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private PlayerFlipAnimation _playerFlip;
+    [SerializeField] private Animations _spriteAnimations;
     
-    private Animations _animations;
     private Rigidbody2D _rigidbody;
     private InputReader _inputReader;
     private Knockback _knockback;
 
     private void Awake()
     {
-        _animations = GetComponent<Animations>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _inputReader = GetComponent<InputReader>();
         _groundChecker = GetComponent<GroundChecker>();
         _knockback = GetComponent<Knockback>();
+        
+        if (_spriteAnimations == null)
+            _spriteAnimations = GetComponentInChildren<Animations>();
+        
+        if (_playerFlip == null)
+            _playerFlip = GetComponentInChildren<PlayerFlipAnimation>();
     }
     
     private void Start()
@@ -40,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
             if (_knockback.IsKnockback == false)
             {
                 MovePlayer(movementInput);
-                _animations.SetIsMoving(Mathf.Abs(movementInput) > 0.01f);
+                _spriteAnimations.SetIsMoving(Mathf.Abs(movementInput) > 0.01f);
                 _playerFlip.HandleFlip(movementInput);
             }
             

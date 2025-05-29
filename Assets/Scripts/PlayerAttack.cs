@@ -1,28 +1,30 @@
 using UnityEngine;
 
-[RequireComponent(typeof(InputReader), typeof(Animations))]
+[RequireComponent(typeof(InputReader))]
 public class PlayerAttack : Attack
 {
-    private InputReader _inputReader;
-    private Animations _animations;
+    [SerializeField] private Animations _animations;
+    
+    private InputReader _inputReader; 
 
     private void Awake()
     {
         _inputReader = GetComponent<InputReader>();
         _animations = GetComponent<Animations>();
+        
+        if (_animations == null)
+            _animations = GetComponentInChildren<Animations>();
     }
 
     private void Update()
     {
         if (_inputReader.IsAttackButtonPressed)
-        {
             Attack();
-        }
     }
     
     protected override bool CanAttack(Collider2D collider)
     {
-        return collider.TryGetComponent<Enemy>(out _);
+        return collider.TryGetComponent<Mob>(out _);
     }
 
     private void Attack()

@@ -11,10 +11,7 @@ public class PlayerFlipAnimation : MonoBehaviour
 
     private void Awake()
     {
-        if (_spriteTransform == null)
-        {
-            _spriteTransform = GetComponentInChildren<SpriteRenderer>()?.transform;
-        }
+        _spriteTransform = GetComponentInChildren<SpriteRenderer>()?.transform;
     }
 
     public void HandleFlip(float horizontalInput)
@@ -24,9 +21,11 @@ public class PlayerFlipAnimation : MonoBehaviour
             return;
         }
 
-        if ((horizontalInput > 0 && !_facingRight) || (horizontalInput < 0 && _facingRight))
+        bool shouldFaceRight = horizontalInput > 0;
+        
+        if (shouldFaceRight != _facingRight)
         {
-            Flip(horizontalInput > 0);
+            Flip(shouldFaceRight);
         }
     }
 
@@ -55,7 +54,9 @@ public class PlayerFlipAnimation : MonoBehaviour
             yield return null;
         }
 
+        _spriteTransform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
         _facingRight = isTurningRight;
         _currentTurnCoroutine = null;
     }
 }
+

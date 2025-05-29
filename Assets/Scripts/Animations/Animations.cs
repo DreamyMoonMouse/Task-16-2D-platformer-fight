@@ -1,27 +1,27 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator), typeof(BlinkAnimation),typeof(Health))]
+[RequireComponent(typeof(Animator), typeof(BlinkAnimation))]
 public class Animations : MonoBehaviour
 {
-    private Animator _animator;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private Health _health;
+    
     private BlinkAnimation _blinkAnimation;
-    private Health _health;
     
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _blinkAnimation = GetComponent<BlinkAnimation>();
-        _health = GetComponent<Health>();
     }
     
     private void OnEnable()
     {
-        _health.ValueChanged += HandleHurt;
+        _health.Damaged += HandleHurt;
     }
 
     private void OnDisable()
     {
-        _health.ValueChanged -= HandleHurt;
+        _health.Damaged -= HandleHurt;
     }
     
     public void SetIsMoving(bool isMoving)
@@ -44,3 +44,4 @@ public class Animations : MonoBehaviour
         _blinkAnimation.Blink();
     }
 }
+

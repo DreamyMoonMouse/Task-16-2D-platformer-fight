@@ -7,8 +7,8 @@ public class TextHealthDisplay : HealthDisplayBase
 
     protected override void UpdateDisplay(float normalizedValue)
     {
-        int current = Mathf.RoundToInt(normalizedValue * _health.MaxValue);
-        _label.text = $"{current}/{_health.MaxValue}";
+        int current = Mathf.RoundToInt(normalizedValue * Health.MaxValue);
+        _label.text = $"{current}/{Health.MaxValue}";
     }
 }
 

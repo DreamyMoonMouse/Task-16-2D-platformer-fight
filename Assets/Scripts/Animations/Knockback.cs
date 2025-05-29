@@ -25,11 +25,6 @@ public class Knockback : MonoBehaviour
         _rigidbody.AddForce(direction * _knockbackForce * forceMultiplier, ForceMode2D.Impulse);
         StartCoroutine(Cooldown(resetVelocityAfter));
     }
-    
-    public void Apply(Vector2 direction, bool resetVelocityAfter)
-    {
-        Apply(direction, 1f, resetVelocityAfter);
-    }
 
     private IEnumerator Cooldown(bool resetVelocityAfter)
     {
