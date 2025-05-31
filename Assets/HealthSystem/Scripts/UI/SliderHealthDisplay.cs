@@ -5,8 +5,8 @@ public class SliderHealthDisplay : HealthDisplayBase
 {
     [SerializeField] private Slider _slider;
 
-    protected override void UpdateDisplay(float normalizedValue)
+    protected override void UpdateDisplay(int current, int maxValue)
     {
-        _slider.value = normalizedValue;
+        _slider.value = (float)current / maxValue;;
     }
 }

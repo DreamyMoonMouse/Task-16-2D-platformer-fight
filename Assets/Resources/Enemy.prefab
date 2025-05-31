@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2674260894649559885}
   - component: {fileID: 4657022526170768146}
-  - component: {fileID: 371738185801923138}
   - component: {fileID: 6541551879758025918}
   - component: {fileID: 7549057353718934810}
   - component: {fileID: 4437684506499237342}
@@ -19,6 +18,7 @@ GameObject:
   - component: {fileID: 7849358202779035378}
   - component: {fileID: 364452369115099787}
   - component: {fileID: 4833883672343344490}
+  - component: {fileID: 665998432210725737}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -54,23 +54,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53c33cc57db1d6041a77201456f2b3ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 1
---- !u!114 &371738185801923138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537097871746730684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c1f5c9e080f1864f9b49dc5e3a148eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _patrolPoints: []
-  _moveSpeed: 3
+  _patrolBehavior: {fileID: 0}
+  _chaseBehavior: {fileID: 0}
   _sightRange: 5
-  _stopDistance: 1.5
   _playerDeath: {fileID: 0}
   _player: {fileID: 0}
 --- !u!50 &6541551879758025918
@@ -176,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1399e65a13f86f40b388df373dc04d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 2
+  _maxValue: 100
 --- !u!95 &7849358202779035378
 Animator:
   serializedVersion: 7
@@ -225,6 +211,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29ff36288c230ca46863094a6f5fbcde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
+  _health: {fileID: 0}
+--- !u!114 &665998432210725737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537097871746730684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdb15d93ef2849e4591dcfd087cd4030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 3
 --- !u!1 &4409328602967480316
 GameObject:
   m_ObjectHideFlags: 0

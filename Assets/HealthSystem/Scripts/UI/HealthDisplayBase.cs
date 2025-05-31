@@ -1,25 +1,26 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public abstract class HealthDisplayBase : MonoBehaviour
 {
-    [SerializeField] protected Health Health;
+    [SerializeField] private Health _health;
 
     private void Start()
     {
-        Health.ValueChanged += OnValueChanged;
-        UpdateDisplay(Health.CurrentValue / (float)Health.MaxValue);
+        _health.ValueChanged += OnValueChanged;
+        UpdateDisplay(_health.CurrentValue, _health.MaxValue);
     }
 
     private void OnDestroy()
     {
-        Health.ValueChanged -= OnValueChanged;
+        _health.ValueChanged -= OnValueChanged;
     }
     
-    protected abstract void UpdateDisplay(float normalizedValue);
+    protected abstract void UpdateDisplay(int current, int maxValue);
 
     private void OnValueChanged(int current)
     {
-        float normalized = current / (float)Health.MaxValue;
-        UpdateDisplay(normalized);
+        float normalized = current / (float)_health.MaxValue;
+        UpdateDisplay(current, _health.MaxValue);
     }
 }

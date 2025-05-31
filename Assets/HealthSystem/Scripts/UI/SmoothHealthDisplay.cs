@@ -11,13 +11,13 @@ public class SmoothHealthDisplay : HealthDisplayBase
     private float _startValue;
     private float _targetValue;
 
-    protected override void UpdateDisplay(float normalizedValue)
+    protected override void UpdateDisplay(int current, int maxValue)
     {
         if (_routine != null)
             StopCoroutine(_routine);
 
         _startValue = _slider.value;
-        _targetValue = normalizedValue;
+        _targetValue = (float)current / maxValue;;
         _routine = StartCoroutine(AnimateRoutine());
     }
 

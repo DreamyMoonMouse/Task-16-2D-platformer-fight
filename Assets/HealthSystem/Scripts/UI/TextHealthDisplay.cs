@@ -5,10 +5,9 @@ public class TextHealthDisplay : HealthDisplayBase
 {
     [SerializeField] private TextMeshProUGUI _label;
 
-    protected override void UpdateDisplay(float normalizedValue)
+    protected override void UpdateDisplay(int current, int maxValue)
     {
-        int current = Mathf.RoundToInt(normalizedValue * Health.MaxValue);
-        _label.text = $"{current}/{Health.MaxValue}";
+        _label.text = $"{current}/{maxValue}";
     }
 }
 

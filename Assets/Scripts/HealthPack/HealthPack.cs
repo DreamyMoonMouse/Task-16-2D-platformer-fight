@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HealthPack : MonoBehaviour
+public class HealthPack : MonoBehaviour, ICollectable
 {
     public void Collect()
     {

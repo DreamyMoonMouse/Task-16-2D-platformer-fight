@@ -4,7 +4,7 @@ using System;
 
 public class CoinsPool : MonoBehaviour
 {
-    [SerializeField] private CoinCollector _coinCollector;
+    [SerializeField] private Collector collector;
     
     private int _collectedCoins = 0;
     private List<Coin> _coins = new List<Coin>();
@@ -26,22 +26,25 @@ public class CoinsPool : MonoBehaviour
             }
         }
         
-        _coinCollector.OnCoinCollected += HandleCoinCollected;
+        collector.OnItemCollected += HandleCollected;
     }
     
     private void OnDestroy()
     {
-        _coinCollector.OnCoinCollected -= HandleCoinCollected;
+        collector.OnItemCollected -= HandleCollected;
     }
 
-    private void HandleCoinCollected(Coin collectedCoin)
+    private void HandleCollected(ICollectable item)
     {
-        _collectedCoins++;
-        OnScoreUpdated?.Invoke();
-        
-        if (_collectedCoins == _coins.Count)
+        if (item is Coin)
         {
-            OnAllCoinsCollected?.Invoke();
+            _collectedCoins++;
+            OnScoreUpdated?.Invoke();
+            
+            if (_collectedCoins == _coins.Count)
+            {
+                OnAllCoinsCollected?.Invoke();
+            }
         }
     }
 }

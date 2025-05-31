@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class HealthPacksPool : MonoBehaviour
 {
-    [SerializeField] private HealthPackCollector _healthPackCollector;
+    [SerializeField] private Collector _collector;
     [SerializeField] private Health _playerHealth;
 
     private List<HealthPack> _healthPacks = new List<HealthPack>();
@@ -20,16 +20,19 @@ public class HealthPacksPool : MonoBehaviour
             }
         }
 
-        _healthPackCollector.OnHealthPackCollected += HandleHealthPackCollected;
+        _collector.OnItemCollected += HandleItemCollected;
     }
 
     private void OnDestroy()
     {
-        _healthPackCollector.OnHealthPackCollected -= HandleHealthPackCollected;
+        _collector.OnItemCollected -= HandleItemCollected;
     }
 
-    private void HandleHealthPackCollected(HealthPack collectedHealthPack)
+    private void HandleItemCollected(ICollectable item)
     {
-        _playerHealth.ApplyHeal(_playerHealth.MaxValue);
+        if (item is HealthPack)
+        {
+            _playerHealth.ApplyHeal(_playerHealth.MaxValue);
+        }
     }
 }
