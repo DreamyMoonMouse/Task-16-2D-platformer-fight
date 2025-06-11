@@ -1473,6 +1473,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mob 3
       objectReference: {fileID: 0}
+    - target: {fileID: 665998432210725737, guid: d331d59fc6e186949bc3d6c24ffb0e73, type: 3}
+      propertyPath: _moveSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2674260894649559885, guid: d331d59fc6e186949bc3d6c24ffb0e73, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6
@@ -4424,7 +4428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04036f58dbffa4149a97d9668e4a35bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRange: 0.4
+  _attackRange: 0.5
   _attackCooldown: 1
   _damage: 20
   _forceMultiplierForTarget: 1

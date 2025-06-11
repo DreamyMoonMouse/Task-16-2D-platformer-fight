@@ -19,8 +19,6 @@ public class PatrolBehavior : MonoBehaviour, IMobBehavior
         float minDistance = 0.5f;
         
         if (Mathf.Abs(transform.position.x - targetPoint.position.x) < minDistance)
-        {
             _currentPointIndex = (_currentPointIndex + 1) % _patrolPoints.Length;
-        }
     }
 }

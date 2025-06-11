@@ -17,9 +17,12 @@ public class ButtonSound : MonoBehaviour
         _audioSource.playOnAwake = false;
     }
     
-    private void OnEnable()  => _button.onClick.AddListener(PlaySound);
+    private void OnEnable()  => 
+        _button.onClick.AddListener(PlaySound);
     
-    private void OnDisable() => _button.onClick.RemoveListener(PlaySound);
+    private void OnDisable() => 
+        _button.onClick.RemoveListener(PlaySound);
 
-    private void PlaySound() => _audioSource.PlayOneShot(_buttonSound);
+    private void PlaySound() => 
+        _audioSource.PlayOneShot(_buttonSound);
 }

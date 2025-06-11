@@ -6,7 +6,7 @@ public class PlayerDeath : Death
 {
     private Rigidbody2D _rigidbody;
     
-    public event Action OnPlayerDied;
+    public event Action PlayerDied;
 
     protected override void Awake()
     {
@@ -16,15 +16,14 @@ public class PlayerDeath : Death
 
     protected override void Die()
     {
-        if (_isDead) return;
+        if (_isDead) 
+            return;
         
         _isDead = true;
 
         if (_rigidbody != null)
-        {
             _rigidbody.simulated = false;
-        }
 
-        OnPlayerDied?.Invoke();
+        PlayerDied?.Invoke();
     }
 }

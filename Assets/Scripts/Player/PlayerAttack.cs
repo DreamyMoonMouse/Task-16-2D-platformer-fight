@@ -18,7 +18,7 @@ public class PlayerAttack : Attack
 
     private void Update()
     {
-        if (_inputReader.IsAttackButtonPressed)
+        if (_inputReader.CheckAttackButtonPressed())
             Attack();
     }
     

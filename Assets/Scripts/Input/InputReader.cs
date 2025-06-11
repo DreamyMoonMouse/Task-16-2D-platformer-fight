@@ -11,14 +11,22 @@ public class InputReader : MonoBehaviour
     private bool _isAttackButtonPressed;
     
     public float HorizontalInput => _horizontalInput;
-    public bool IsJumpButtonPressed => GetBoolAsTrigger(ref _isJumpButtonPressed);
-    public bool IsAttackButtonPressed => GetBoolAsTrigger(ref _isAttackButtonPressed);
 
     private void Update()
     {
         _horizontalInput = Input.GetAxis(HorizontalAxis);
         _isJumpButtonPressed |= Input.GetButtonDown(JumpButton);
         _isAttackButtonPressed |= Input.GetButtonDown(AttackButton);
+    }
+    
+    public bool CheckJumpButtonPress()
+    {
+       return GetBoolAsTrigger(ref _isJumpButtonPressed);
+    }
+    
+    public bool CheckAttackButtonPressed()
+    {
+        return GetBoolAsTrigger(ref _isAttackButtonPressed);
     }
     
     private bool GetBoolAsTrigger(ref bool value)

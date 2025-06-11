@@ -13,7 +13,8 @@ public abstract class Attack : MonoBehaviour
 
     protected void PerformAttack()
     {
-        if (IsAttackReady() == false) return;
+        if (IsAttackReady() == false) 
+            return;
 
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _attackRange);
         TryAttackFirstValidTarget(colliders);

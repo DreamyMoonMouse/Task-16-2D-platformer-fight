@@ -9,9 +9,11 @@ public class SoundToggle : MonoBehaviour
     private string _soundsEnabledKey = "SoundsEnabled";
     private int _enabledValue = 1;
     
-    private void OnEnable()  => _toggle.onValueChanged.AddListener(OnToggleChanged);
+    private void OnEnable()  => 
+        _toggle.onValueChanged.AddListener(OnToggleChanged);
     
-    private void OnDisable() => _toggle.onValueChanged.RemoveListener(OnToggleChanged);
+    private void OnDisable() => 
+        _toggle.onValueChanged.RemoveListener(OnToggleChanged);
 
     private void Start()
     {

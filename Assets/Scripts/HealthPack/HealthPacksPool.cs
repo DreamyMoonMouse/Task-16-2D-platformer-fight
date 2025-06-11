@@ -15,9 +15,7 @@ public class HealthPacksPool : MonoBehaviour
             var healthPack = child.GetComponent<HealthPack>();
             
             if (healthPack != null)
-            {
                 _healthPacks.Add(healthPack);
-            }
         }
 
         _collector.OnItemCollected += HandleItemCollected;
@@ -31,8 +29,6 @@ public class HealthPacksPool : MonoBehaviour
     private void HandleItemCollected(ICollectable item)
     {
         if (item is HealthPack)
-        {
             _playerHealth.ApplyHeal(_playerHealth.MaxValue);
-        }
     }
 }

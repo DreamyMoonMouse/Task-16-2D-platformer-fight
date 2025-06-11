@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HealthPackSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _healthPackPrefab;
+    [SerializeField] private HealthPack _healthPackPrefab;
     [SerializeField] private int _numberOfPacks = 3;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _spawnHeightOffset = 0.5f;
@@ -15,9 +15,7 @@ public class HealthPackSpawner : MonoBehaviour
             Vector2 spawnPosition = GetRandomGroundPosition();
             
             if (spawnPosition != Vector2.zero)
-            {
                 Instantiate(_healthPackPrefab, spawnPosition, Quaternion.identity, _healthPacksParent);
-            }
         }
     }
 
@@ -25,7 +23,8 @@ public class HealthPackSpawner : MonoBehaviour
     {
         Collider2D[] groundColliders = Physics2D.OverlapCircleAll(Vector2.zero, 1000f, _groundLayer);
         
-        if (groundColliders.Length == 0) return Vector2.zero;
+        if (groundColliders.Length == 0) 
+            return Vector2.zero;
         
         Collider2D randomPlatform = groundColliders[Random.Range(0, groundColliders.Length)];
         Bounds bounds = randomPlatform.bounds;

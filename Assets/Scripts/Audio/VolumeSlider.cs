@@ -21,9 +21,11 @@ public class VolumeSlider : MonoBehaviour
     public float  DefaultValue => _defaultValue;
     public float  MinValue => _minValue;
     
-    private void OnEnable() =>  _slider.onValueChanged.AddListener(OnSliderChanged);
+    private void OnEnable() =>  
+        _slider.onValueChanged.AddListener(OnSliderChanged);
 
-    private void OnDisable() => _slider.onValueChanged.RemoveListener(OnSliderChanged);
+    private void OnDisable() => 
+        _slider.onValueChanged.RemoveListener(OnSliderChanged);
 
     private void Start()
     {

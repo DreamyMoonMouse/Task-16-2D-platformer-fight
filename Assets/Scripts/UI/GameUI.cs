@@ -15,14 +15,14 @@ public class GameUI : MonoBehaviour
         _gameOverCanvas.gameObject.SetActive(false);
         _coinsPool.OnAllCoinsCollected += ShowWinMessage;
         _coinsPool.OnScoreUpdated += UpdateScore;
-        _playerDeath.OnPlayerDied += ShowGameOver;
+        _playerDeath.PlayerDied += ShowGameOver;
     }
     
     private void OnDestroy()
     {
         _coinsPool.OnAllCoinsCollected -= ShowWinMessage;
         _coinsPool.OnScoreUpdated -= UpdateScore; 
-        _playerDeath.OnPlayerDied -= ShowGameOver;
+        _playerDeath.PlayerDied -= ShowGameOver;
     }
 
     private void ShowWinMessage()

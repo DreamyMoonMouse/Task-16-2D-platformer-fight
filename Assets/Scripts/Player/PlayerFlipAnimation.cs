@@ -17,24 +17,18 @@ public class PlayerFlipAnimation : MonoBehaviour
     public void HandleFlip(float horizontalInput)
     {
         if (_currentTurnCoroutine != null || Mathf.Approximately(horizontalInput, 0f))
-        {
             return;
-        }
 
         bool shouldFaceRight = horizontalInput > 0;
         
         if (shouldFaceRight != _facingRight)
-        {
             Flip(shouldFaceRight);
-        }
     }
 
     private void Flip(bool isTurningRight)
     {
         if (_currentTurnCoroutine != null)
-        {
             StopCoroutine(_currentTurnCoroutine);
-        }
 
         _currentTurnCoroutine = StartCoroutine(Turn(isTurningRight));
     }

@@ -21,9 +21,7 @@ public class CoinsPool : MonoBehaviour
             var coin = child.GetComponent<Coin>();
             
             if (coin != null)
-            {
                 _coins.Add(coin);
-            }
         }
         
         collector.OnItemCollected += HandleCollected;
@@ -42,9 +40,7 @@ public class CoinsPool : MonoBehaviour
             OnScoreUpdated?.Invoke();
             
             if (_collectedCoins == _coins.Count)
-            {
                 OnAllCoinsCollected?.Invoke();
-            }
         }
     }
 }

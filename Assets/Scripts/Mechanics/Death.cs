@@ -15,9 +15,7 @@ public abstract class Death : MonoBehaviour
     protected virtual void Update()
     {
         if (_health.CurrentValue <= 0 && _isDead == false)
-        {
             Die();
-        }
     }
 
     protected virtual void Die()

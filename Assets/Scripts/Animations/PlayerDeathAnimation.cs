@@ -23,9 +23,7 @@ public class PlayerDeathAnimation : MonoBehaviour
         var playerDeath = GetComponentInParent<PlayerDeath>();
         
         if (playerDeath != null)
-        {
-            playerDeath.OnPlayerDied += HandlePlayerDied;
-        }
+            playerDeath.PlayerDied += HandlePlayerDied;
     }
 
     private void OnDisable()
@@ -33,9 +31,7 @@ public class PlayerDeathAnimation : MonoBehaviour
         var playerDeath = GetComponentInParent<PlayerDeath>();
         
         if (playerDeath != null)
-        {
-            playerDeath.OnPlayerDied -= HandlePlayerDied;
-        }
+            playerDeath.PlayerDied -= HandlePlayerDied;
     }
     
     private void HandlePlayerDied()

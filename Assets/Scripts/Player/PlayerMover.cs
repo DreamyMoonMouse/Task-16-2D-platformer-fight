@@ -30,7 +30,8 @@ public class PlayerMover : MonoBehaviour
     
     private void Update()
     {
-        if (_knockback.IsKnockback) return;
+        if (_knockback.IsKnockback) 
+            return;
 
         float movementInput = _inputReader.HorizontalInput;
         _spriteAnimations.SetIsMoving(Mathf.Abs(movementInput) > 0.01f);
@@ -39,15 +40,14 @@ public class PlayerMover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_knockback.IsKnockback) return;
+        if (_knockback.IsKnockback) 
+            return;
 
         float movementInput = _inputReader.HorizontalInput;
         MovePlayer(movementInput);
 
-        if (_inputReader.IsJumpButtonPressed && _groundDetector.IsGrounded())
-        {
+        if (_inputReader.CheckJumpButtonPress() && _groundDetector.IsGrounded())
             Jump();
-        }
     }
 
     private void MovePlayer(float movementInput)

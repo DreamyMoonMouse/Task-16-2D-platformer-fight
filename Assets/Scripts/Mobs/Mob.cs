@@ -30,12 +30,12 @@ public class Mob : MonoBehaviour
 
     private void Start()
     {
-        _playerDeath.OnPlayerDied += StopBehavior;
+        _playerDeath.PlayerDied += StopBehavior;
     }
 
     private void OnDestroy()
     {
-        _playerDeath.OnPlayerDied -= StopBehavior;
+        _playerDeath.PlayerDied -= StopBehavior;
     }
 
     private void StopBehavior()
