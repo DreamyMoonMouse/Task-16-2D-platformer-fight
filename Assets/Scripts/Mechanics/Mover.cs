@@ -4,6 +4,7 @@ using UnityEngine;
 public class Mover : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 3f;
+    
     private Rigidbody2D _rigidbody;
 
     private void Awake()
@@ -13,6 +14,9 @@ public class Mover : MonoBehaviour
 
     public void MoveTo(Vector2 targetPosition)
     {
+        if (_rigidbody == null)
+            _rigidbody = GetComponent<Rigidbody2D>();
+        
         Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
         _rigidbody.linearVelocity = direction * _moveSpeed;
     }

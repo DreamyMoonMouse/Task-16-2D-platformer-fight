@@ -7,6 +7,7 @@ public class PlayerDeathAnimation : MonoBehaviour
     [SerializeField] private float _fallSpeed = 2f;
     [SerializeField] private float _deathLiftHeight = 1.5f;
     [SerializeField] private float _fallBoundary = -10f;
+    [SerializeField] private PlayerDeath _playerDeath;
     
     private Vector3 _originalScale;
     private Coroutine _fallCoroutine;
@@ -20,18 +21,12 @@ public class PlayerDeathAnimation : MonoBehaviour
 
     private void OnEnable()
     {
-        var playerDeath = GetComponentInParent<PlayerDeath>();
-        
-        if (playerDeath != null)
-            playerDeath.PlayerDied += HandlePlayerDied;
+        _playerDeath.PlayerDied += HandlePlayerDied;
     }
 
     private void OnDisable()
     {
-        var playerDeath = GetComponentInParent<PlayerDeath>();
-        
-        if (playerDeath != null)
-            playerDeath.PlayerDied -= HandlePlayerDied;
+        _playerDeath.PlayerDied -= HandlePlayerDied;
     }
     
     private void HandlePlayerDied()

@@ -10,10 +10,6 @@ public class PlayerAttack : Attack
     private void Awake()
     {
         _inputReader = GetComponent<InputReader>();
-        _animations = GetComponent<Animations>();
-        
-        if (_animations == null)
-            _animations = GetComponentInChildren<Animations>();
     }
 
     private void Update()

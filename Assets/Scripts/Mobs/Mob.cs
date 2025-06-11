@@ -9,14 +9,13 @@ public class Mob : MonoBehaviour
     [SerializeField] private float _sightRange = 5f;
     [SerializeField] private PlayerDeath _playerDeath;
     [SerializeField] private Transform _player;
+    [SerializeField] private Mover _mover;
     
-    private Mover _mover;
     private Knockback _knockback;
     private Coroutine _behaviorCoroutine;
 
     private void Awake()
     {
-        _mover = GetComponent<Mover>();
         _knockback = GetComponent<Knockback>();
     }
 

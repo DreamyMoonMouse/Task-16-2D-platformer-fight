@@ -5,14 +5,9 @@ public class BlinkAnimation : MonoBehaviour
 {
     [SerializeField] private float _blinkDuration = 1f;
     [SerializeField] private float _blinkInterval = 0.2f;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     
-    private SpriteRenderer _spriteRenderer;
     private Coroutine _blinkCoroutine;
-
-    private void Awake()
-    {
-        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-    }
 
     public void Blink()
     {

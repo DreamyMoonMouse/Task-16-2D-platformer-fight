@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerFlipAnimation : MonoBehaviour
 {
     [SerializeField] private float _turnDuration = 0.5f;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
 
     private Transform _spriteTransform;
     private bool _facingRight = true;
@@ -11,7 +12,7 @@ public class PlayerFlipAnimation : MonoBehaviour
 
     private void Awake()
     {
-        _spriteTransform = GetComponentInChildren<SpriteRenderer>()?.transform;
+        _spriteTransform = _spriteRenderer.transform;
     }
 
     public void HandleFlip(float horizontalInput)

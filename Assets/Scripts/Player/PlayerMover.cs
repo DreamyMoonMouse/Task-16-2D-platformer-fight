@@ -20,12 +20,6 @@ public class PlayerMover : MonoBehaviour
         _inputReader = GetComponent<InputReader>();
         _groundDetector = GetComponent<GroundDetector>();
         _knockback = GetComponent<Knockback>();
-        
-        if (_spriteAnimations == null)
-            _spriteAnimations = GetComponentInChildren<Animations>();
-        
-        if (_playerFlip == null)
-            _playerFlip = GetComponentInChildren<PlayerFlipAnimation>();
     }
     
     private void Update()
