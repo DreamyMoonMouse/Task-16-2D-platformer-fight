@@ -8,9 +8,9 @@ public class PlayerDeath : Death
     
     public event Action PlayerDied;
 
-    protected override void Awake()
+    protected override void OnAwake()
     {
-        base.Awake();
+        base.OnAwake();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 

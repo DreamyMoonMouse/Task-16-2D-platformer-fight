@@ -1,27 +1,13 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator), typeof(BlinkAnimation))]
+[RequireComponent(typeof(Animator))]
 public class Animations : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private Health _health;
-    
-    private BlinkAnimation _blinkAnimation;
     
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        _blinkAnimation = GetComponent<BlinkAnimation>();
-    }
-    
-    private void OnEnable()
-    {
-        _health.Damaged += HandleHurt;
-    }
-
-    private void OnDisable()
-    {
-        _health.Damaged -= HandleHurt;
     }
     
     public void SetIsMoving(bool isMoving)
@@ -37,11 +23,6 @@ public class Animations : MonoBehaviour
     public void SetIsAttacking(bool isAttacking)
     {
         _animator.SetBool(AnimatorData.Params.IsAttacking, isAttacking);
-    }
-    
-    private void HandleHurt(int health)
-    {
-        _blinkAnimation.Blink();
     }
 }
 

@@ -9,8 +9,8 @@ public class CoinsPool : MonoBehaviour
     private int _collectedCoins = 0;
     private List<Coin> _coins = new List<Coin>();
     
-    public event Action OnAllCoinsCollected;
-    public event Action OnScoreUpdated;
+    public event Action AllCoinsCollected;
+    public event Action ScoreUpdated;
     
     public int CollectedCoins => _collectedCoins;
     
@@ -24,12 +24,12 @@ public class CoinsPool : MonoBehaviour
                 _coins.Add(coin);
         }
         
-        collector.OnItemCollected += HandleCollected;
+        collector.ItemCollected += HandleCollected;
     }
     
     private void OnDestroy()
     {
-        collector.OnItemCollected -= HandleCollected;
+        collector.ItemCollected -= HandleCollected;
     }
 
     private void HandleCollected(ICollectable item)
@@ -37,10 +37,10 @@ public class CoinsPool : MonoBehaviour
         if (item is Coin)
         {
             _collectedCoins++;
-            OnScoreUpdated?.Invoke();
+            ScoreUpdated?.Invoke();
             
             if (_collectedCoins == _coins.Count)
-                OnAllCoinsCollected?.Invoke();
+                AllCoinsCollected?.Invoke();
         }
     }
 }

@@ -2,9 +2,21 @@ using UnityEngine;
 
 public class ChaseBehavior : MonoBehaviour, IMobBehavior
 {
-    [SerializeField] private Transform _player;
     [SerializeField] private Mover _mover;
     [SerializeField] private float _stopDistance = 0.8f;
+    
+    private ITargetable _target;
+    private float _stopDistanceSquared;
+
+    private void Awake()
+    {
+        _stopDistanceSquared = _stopDistance * _stopDistance;
+    }
+    
+    public void SetTarget(ITargetable target)
+    {
+        _target = target;
+    }
     
     public void Execute()
     {
@@ -13,18 +25,19 @@ public class ChaseBehavior : MonoBehaviour, IMobBehavior
 
     private void Chase()
     {
-        if (_player != null)
+        if (_target == null)
+            return;
+        
+        Vector2 direction = _target.GetTransform().position - transform.position;
+        float distanceSquared = direction.sqrMagnitude;
+
+        if (distanceSquared > _stopDistanceSquared)
         {
-            float distance = Vector2.Distance(transform.position, _player.position);
-            
-            if (distance > _stopDistance)
-            {
-                _mover.MoveTo(_player.position);
-            }
-            else
-            {
-                _mover.Stop();
-            }
+            _mover.MoveTo(_target.GetTransform().position);
+        }
+        else
+        {
+            _mover.Stop();
         }
     }
 }

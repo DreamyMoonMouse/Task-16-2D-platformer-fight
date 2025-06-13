@@ -6,10 +6,9 @@ public class Mob : MonoBehaviour
 {
     [SerializeField] private PatrolBehavior _patrolBehavior;
     [SerializeField] private ChaseBehavior _chaseBehavior;
-    [SerializeField] private float _sightRange = 5f;
     [SerializeField] private PlayerDeath _playerDeath;
-    [SerializeField] private Transform _player;
     [SerializeField] private Mover _mover;
+    [SerializeField] private CharacterDetector _characterDetector;
     
     private Knockback _knockback;
     private Coroutine _behaviorCoroutine;
@@ -59,25 +58,20 @@ public class Mob : MonoBehaviour
                 yield return null;
                 continue;
             }
-            
-            IMobBehavior currentBehavior = (_player != null && IsPlayerInSight()) ? _chaseBehavior : _patrolBehavior;
-            currentBehavior.Execute();
-            
+
+            ITargetable target = _characterDetector.DetectNearestTarget();
+
+            if (target != null)
+            {
+                _chaseBehavior.SetTarget(target);
+                _chaseBehavior.Execute();
+            }
+            else
+            {
+                _patrolBehavior.Execute();
+            }
+
             yield return null;
         }
-    }
-
-    private bool IsPlayerInSight()
-    {
-        if (_player == null) 
-            return false;
-        
-        return Vector2.Distance(transform.position, _player.position) <= _sightRange;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _sightRange);
     }
 }

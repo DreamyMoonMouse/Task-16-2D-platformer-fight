@@ -7,12 +7,12 @@ public class HealthPackCollectorHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        _collector.OnItemCollected += HandleCollected;
+        _collector.ItemCollected += HandleCollected;
     }
 
     private void OnDisable()
     {
-        _collector.OnItemCollected -= HandleCollected;
+        _collector.ItemCollected -= HandleCollected;
     }
 
     private void HandleCollected(ICollectable item)

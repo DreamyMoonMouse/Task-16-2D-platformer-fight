@@ -7,14 +7,24 @@ public abstract class Death : MonoBehaviour
     
     protected bool _isDead = false;
 
-    protected virtual void Awake()
+    private void Awake()
+    {
+        OnAwake();
+    }
+
+    private void Update()
+    {
+        OnUpdate();
+    }
+
+    protected virtual void OnAwake()
     {
         _health = GetComponent<Health>();
     }
 
-    protected virtual void Update()
+    protected virtual void OnUpdate()
     {
-        if (_health.CurrentValue <= 0 && _isDead == false)
+        if (_health != null && _health.CurrentValue <= 0 && !_isDead)
             Die();
     }
 
