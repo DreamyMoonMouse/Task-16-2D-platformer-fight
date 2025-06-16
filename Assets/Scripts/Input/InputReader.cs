@@ -5,10 +5,12 @@ public class InputReader : MonoBehaviour
     private const string JumpButton = "Jump";
     private const string HorizontalAxis = "Horizontal";
     private const string AttackButton = "Fire1";
+    private const string VampirismButton = "Fire2";
     
     private float _horizontalInput; 
     private bool _isJumpButtonPressed;
     private bool _isAttackButtonPressed;
+    private bool _isVampirismButtonPressed;
     
     public float HorizontalInput => _horizontalInput;
 
@@ -17,6 +19,7 @@ public class InputReader : MonoBehaviour
         _horizontalInput = Input.GetAxis(HorizontalAxis);
         _isJumpButtonPressed |= Input.GetButtonDown(JumpButton);
         _isAttackButtonPressed |= Input.GetButtonDown(AttackButton);
+        _isVampirismButtonPressed |= Input.GetButtonDown(VampirismButton);
     }
     
     public bool CheckJumpButtonPress()
@@ -27,6 +30,11 @@ public class InputReader : MonoBehaviour
     public bool CheckAttackButtonPressed()
     {
         return GetBoolAsTrigger(ref _isAttackButtonPressed);
+    }
+    
+    public bool CheckVampirismButtonPressed()
+    {
+        return GetBoolAsTrigger(ref _isVampirismButtonPressed);
     }
     
     private bool GetBoolAsTrigger(ref bool value)

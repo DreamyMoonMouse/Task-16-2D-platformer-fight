@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerAttack : Attack
 {
     [SerializeField] private Animations _animations;
+    [SerializeField] private VampirismAbility _vampirism;
     
     private InputReader _inputReader; 
 
@@ -16,6 +17,9 @@ public class PlayerAttack : Attack
     {
         if (_inputReader.CheckAttackButtonPressed())
             Attack();
+        
+        if (_inputReader.CheckVampirismButtonPressed() && _vampirism.IsReady())
+            _vampirism.Activate();
     }
     
     protected override bool CanAttack(Collider2D collider)
