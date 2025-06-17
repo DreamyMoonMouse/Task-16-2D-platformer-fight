@@ -343,9 +343,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detectionRange: 5
-  _targetLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &8584039823973953247
 MonoBehaviour:
   m_ObjectHideFlags: 0

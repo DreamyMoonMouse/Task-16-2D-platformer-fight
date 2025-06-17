@@ -3,45 +3,38 @@ using UnityEngine.UI;
 
 public class VampirismUI : MonoBehaviour
 {
-    [SerializeField] private Slider _timerSlider;
-    [SerializeField] private Image _cooldownFill;
+    [SerializeField] private Image _fillBar; 
+    [SerializeField] private Text _timerText; 
 
-    private static VampirismUI _instance;
-    public static VampirismUI Instance => _instance;
-
-    private void Awake()
+    public void UpdateTimer(float fillAmount, float remainingTime)
     {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
+        _fillBar.fillAmount = fillAmount; 
+        
+        if (_timerText != null)
+            _timerText.text = Mathf.Ceil(remainingTime).ToString(); 
     }
 
-    public void UpdateTimer(float fillAmount)
+    public void UpdateCooldown(float fillAmount, float cooldownRemaining)
     {
-        _timerSlider.value = fillAmount;
-        _timerSlider.gameObject.SetActive(true);
-    }
-
-    public void UpdateCooldown(float fillAmount)
-    {
-        _cooldownFill.fillAmount = fillAmount;
-        _cooldownFill.gameObject.SetActive(true);
+        _fillBar.fillAmount = fillAmount; 
+        
+        if (_timerText != null)
+            _timerText.text = Mathf.Ceil(cooldownRemaining).ToString();
     }
 
     public void Show()
     {
-        _timerSlider.gameObject.SetActive(true);
+        _fillBar.gameObject.SetActive(true);
+        
+        if (_timerText != null)
+            _timerText.gameObject.SetActive(true);
     }
 
     public void Hide()
     {
-        _timerSlider.gameObject.SetActive(false);
-        _cooldownFill.gameObject.SetActive(false);
+        _fillBar.gameObject.SetActive(false);
+        
+        if (_timerText != null)
+            _timerText.gameObject.SetActive(false);
     }
 }

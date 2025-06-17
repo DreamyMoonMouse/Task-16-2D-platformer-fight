@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(Mover), typeof(Knockback))]
-public class Mob : MonoBehaviour
+public class Mob : MonoBehaviour, ITargetable 
 {
     [SerializeField] private PatrolBehavior _patrolBehavior;
     [SerializeField] private ChaseBehavior _chaseBehavior;
@@ -35,6 +35,12 @@ public class Mob : MonoBehaviour
     {
         _playerDeath.PlayerDied -= StopBehavior;
     }
+    
+    public Transform GetTransform() 
+        => transform;
+    
+    public bool IsPlayer() 
+        => false;
 
     private void StopBehavior()
     {

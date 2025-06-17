@@ -1,19 +1,16 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterDetector))]
-public class VampirismAbility : MonoBehaviour
+public class VampirismAbility : MonoBehaviour, ISkill
 {
-    [SerializeField] private float _activationDuration = 6f;
-    [SerializeField] private float _cooldownDuration = 4f;
     [SerializeField] private float _damagePerSecond = 10f;
+    [SerializeField] private float _maxDamage = 60f;  
     [SerializeField] private SpriteRenderer _radiusVisualizer;
 
     private Health _playerHealth;
     private CharacterDetector _detector;
-    private float _remainingTime;
-    private float _cooldownRemaining;
-    private bool _isActivated;
-    private bool _isOnCooldown;
+    private float _accumulatedDamage = 0f; 
+    private float _totalDamageDealt = 0f;
 
     private void Awake()
     {
@@ -21,67 +18,58 @@ public class VampirismAbility : MonoBehaviour
         _detector = GetComponent<CharacterDetector>();
     }
 
-    private void Update()
-    {
-        if (_isActivated)
-        {
-            _remainingTime -= Time.deltaTime;
-            VampirismUI.Instance.UpdateTimer(_remainingTime / _activationDuration);
-
-            if (_remainingTime <= 0f)
-            {
-                Deactivate();
-            }
-            else
-            {
-                ApplyVampirism();
-            }
-        }
-        else if (_isOnCooldown)
-        {
-            _cooldownRemaining -= Time.deltaTime;
-            VampirismUI.Instance.UpdateCooldown(_cooldownRemaining / _cooldownDuration);
-
-            if (_cooldownRemaining <= 0f)
-            {
-                _isOnCooldown = false;
-            }
-        }
-    }
-
     public void Activate()
     {
-        if (!_isActivated && !_isOnCooldown)
-        {
-            _isActivated = true;
-            _remainingTime = _activationDuration;
-            _radiusVisualizer.enabled = true;
-            VampirismUI.Instance.Show();
-        }
+        _radiusVisualizer.enabled = true;
+        _accumulatedDamage = 0f;
+        _totalDamageDealt = 0f;
     }
 
-    private void ApplyVampirism()
+    public void Deactivate()
+    {
+        _radiusVisualizer.enabled = false;
+    }
+
+    public void Apply()
     {
         ITargetable target = _detector.DetectNearestTarget();
-        if (target == null) return;
 
-        int damage = Mathf.CeilToInt(_damagePerSecond * Time.deltaTime);
-        Health targetHealth = target.GetTransform().GetComponent<Health>();
-        if (targetHealth != null)
+        if (target == null || target.GetTransform() == transform)
         {
-            targetHealth.ApplyDamage(damage);
-            _playerHealth.ApplyHeal(damage);
+            Debug.Log("Нет подходящей цели для вампиризма");
+            return;
+        }
+
+        Debug.Log($"Применяем вампиризм к {target.GetTransform().name}");
+        
+        if (_totalDamageDealt >= _maxDamage)
+        {
+            Debug.Log("Достигнут лимит высасываемого здоровья");
+            return;
+        }
+        
+        float damageThisFrame = _damagePerSecond * Time.deltaTime;
+        _accumulatedDamage += damageThisFrame;
+        
+        if (_accumulatedDamage >= 1f)
+        {
+            int damageToApply = Mathf.FloorToInt(_accumulatedDamage);
+            _accumulatedDamage -= damageToApply;
+            
+            if (_totalDamageDealt + damageToApply > _maxDamage)
+            {
+                damageToApply = Mathf.FloorToInt(_maxDamage - _totalDamageDealt);
+            }
+
+            Health targetHealth = target.GetTransform().GetComponent<Health>();
+            
+            if (targetHealth != null)
+            {
+                targetHealth.ApplyDamage(damageToApply);
+                _playerHealth.ApplyHeal(damageToApply);
+                _totalDamageDealt += damageToApply; 
+                Debug.Log($"Нанесено {damageToApply} урона и вылечено игроку, всего нанесено {_totalDamageDealt}");
+            }
         }
     }
-
-    private void Deactivate()
-    {
-        _isActivated = false;
-        _radiusVisualizer.enabled = false;
-        _isOnCooldown = true;
-        _cooldownRemaining = _cooldownDuration;
-        VampirismUI.Instance.Hide();
-    }
-
-    public bool IsReady() => !_isActivated && !_isOnCooldown;
 }

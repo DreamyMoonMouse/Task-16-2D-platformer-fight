@@ -1,29 +1,27 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class CharacterDetector : MonoBehaviour
 {
     [SerializeField] private float _detectionRange = 5f;
-    [SerializeField] private LayerMask _targetLayerMask = ~0; 
-
-    private float _detectionRangeSquared;
-
-    private void Awake()
-    {
-        _detectionRangeSquared = _detectionRange * _detectionRange;
-    }
+    [SerializeField] private bool _isMobDetector = true; 
 
     public ITargetable DetectNearestTarget()
     {
-        Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, _detectionRange, _targetLayerMask);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _detectionRange);
 
         ITargetable nearestTarget = null;
         float minSqrDistance = float.MaxValue;
 
-        foreach (var collider in targets)
+        foreach (var collider in colliders)
         {
             if (collider.TryGetComponent(out ITargetable target))
             {
+                if (target.GetTransform() == transform)
+                    continue;
+                
+                if (_isMobDetector && target.IsPlayer() == false)
+                    continue;
+                
                 Vector2 direction = target.GetTransform().position - transform.position;
                 float distanceSquared = direction.sqrMagnitude;
 
