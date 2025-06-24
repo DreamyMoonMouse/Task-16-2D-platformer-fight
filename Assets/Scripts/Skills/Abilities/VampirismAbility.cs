@@ -35,41 +35,26 @@ public class VampirismAbility : MonoBehaviour, ISkill
         ITargetable target = _detector.DetectNearestTarget();
 
         if (target == null || target.GetTransform() == transform)
-        {
-            Debug.Log("Нет подходящей цели для вампиризма");
             return;
-        }
 
-        Debug.Log($"Применяем вампиризм к {target.GetTransform().name}");
-        
         if (_totalDamageDealt >= _maxDamage)
-        {
-            Debug.Log("Достигнут лимит высасываемого здоровья");
             return;
-        }
-        
+
         float damageThisFrame = _damagePerSecond * Time.deltaTime;
         _accumulatedDamage += damageThisFrame;
-        
+
         if (_accumulatedDamage >= 1f)
         {
             int damageToApply = Mathf.FloorToInt(_accumulatedDamage);
             _accumulatedDamage -= damageToApply;
-            
+
             if (_totalDamageDealt + damageToApply > _maxDamage)
-            {
                 damageToApply = Mathf.FloorToInt(_maxDamage - _totalDamageDealt);
-            }
 
             Health targetHealth = target.GetTransform().GetComponent<Health>();
-            
-            if (targetHealth != null)
-            {
-                targetHealth.ApplyDamage(damageToApply);
-                _playerHealth.ApplyHeal(damageToApply);
-                _totalDamageDealt += damageToApply; 
-                Debug.Log($"Нанесено {damageToApply} урона и вылечено игроку, всего нанесено {_totalDamageDealt}");
-            }
+            targetHealth.ApplyDamage(damageToApply);
+            _playerHealth.ApplyHeal(damageToApply);
+            _totalDamageDealt += damageToApply;
         }
     }
 }

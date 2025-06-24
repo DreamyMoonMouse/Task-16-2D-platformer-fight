@@ -343,6 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detectionRange: 5
+  _isMobDetector: 1
 --- !u!114 &8584039823973953247
 MonoBehaviour:
   m_ObjectHideFlags: 0

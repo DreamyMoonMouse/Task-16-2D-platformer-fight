@@ -17,6 +17,7 @@ public class SkillState : MonoBehaviour
     public event Action OnActivate;
     public event Action OnDeactivate;
     public event Action OnApply;
+    public event Action OnCooldownComplete;
 
     public bool CanActivate 
         => _isActivated == false && _isOnCooldown == false;
@@ -36,7 +37,8 @@ public class SkillState : MonoBehaviour
         if (_isActivated)
         {
             _remainingTime -= Time.deltaTime;
-            OnActivationTick?.Invoke(_remainingTime / _activationDuration, _remainingTime);
+            float fillAmount = 1f - (_remainingTime / _activationDuration);
+            OnActivationTick?.Invoke(fillAmount, _remainingTime);
 
             if (_remainingTime <= 0f)
             {
@@ -53,11 +55,13 @@ public class SkillState : MonoBehaviour
         else if (_isOnCooldown)
         {
             _cooldownRemaining -= Time.deltaTime;
-            OnCooldownTick?.Invoke(1f - (_cooldownRemaining / _cooldownDuration), _cooldownRemaining);
+            float fillAmount = _cooldownRemaining / _cooldownDuration;
+            OnCooldownTick?.Invoke(fillAmount, _cooldownRemaining);
 
             if (_cooldownRemaining <= 0f)
             {
                 _isOnCooldown = false;
+                OnCooldownComplete?.Invoke();
             }
         }
     }

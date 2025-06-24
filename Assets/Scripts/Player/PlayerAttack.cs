@@ -16,9 +16,6 @@ public class PlayerAttack : Attack
     {
         if (_inputReader.CheckAttackButtonPressed())
             Attack();
-        
-        // if (_inputReader.CheckVampirismButtonPressed() && _vampirism.IsReady())
-        //     _vampirism.Activate();
     }
     
     protected override bool CanAttack(Collider2D collider)
